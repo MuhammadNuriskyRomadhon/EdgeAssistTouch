@@ -18,7 +18,11 @@ jobs:
           unzip -q EdgeAssistTouch.zip -d extracted
           cp -r extracted/EdgeAssist/. .
 
-      # Android SDK membutuhkan JDK 17+
+      - name: Fix Android SDK version
+        run: |
+          sed -i 's/compileSdkVersion 27/compileSdkVersion 29/' app/build.gradle
+          sed -i 's/buildToolsVersion "27.0.3"/buildToolsVersion "29.0.2"/' app/build.gradle
+
       - name: Setup Java 17
         uses: actions/setup-java@v5
         with:
@@ -28,11 +32,10 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK 27
+      - name: Install Android SDK 29
         run: |
-          yes | sdkmanager "platforms;android-27" "build-tools;27.0.3"
+          yes | sdkmanager "platforms;android-29" "build-tools;29.0.2"
 
-      # Gradle 6.7.1 membutuhkan Java 11
       - name: Setup Java 11 for Gradle
         uses: actions/setup-java@v5
         with:
