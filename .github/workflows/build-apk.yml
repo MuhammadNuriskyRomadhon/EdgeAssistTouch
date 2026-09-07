@@ -26,7 +26,13 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
+        
+      - name: Setup Java 11 for Gradle
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '11'
+          
       - name: Install Android SDK 27
         run: |
           yes | sdkmanager "platforms;android-27" "build-tools;27.0.3"
